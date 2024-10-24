@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Chamados</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra mais forte */
+            padding: 30px; /* Aumentado para maior espaçamento */
+            text-align: center;
+            width: 350px; /* Aumentado para maior largura */
+        }
+
+        h1 {
+            margin-bottom: 30px; /* Aumentado para mais espaço abaixo do título */
+            color: #333;
+            font-size: 28px; /* Tamanho do título aumentado */
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Espaçamento entre os botões aumentado */
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 20px; /* Aumentado para maior área de clique */
+            font-size: 18px; /* Tamanho do texto do botão aumentado */
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%; /* Largura do botão ocupa 100% do container */
+            min-height: 60px; /* Altura mínima dos botões aumentada */
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Efeito de hover */
+        }
+
+        a {
+            text-decoration: none; /* Remove o sublinhado dos links */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GUIA CHAMADOS</h1> <!-- Título -->
+        <div class="button-group">
+            <a href="abertura_chamado.html"><button>Abrir Chamado</button></a>
+            <a href="login.html"><button>Login de Administrador</button></a>
+            <a href="acompanhar_chamado.html"><button>Acompanhar Chamado</button></a>
+        </div>
+    </div>
+</body>
+</html>

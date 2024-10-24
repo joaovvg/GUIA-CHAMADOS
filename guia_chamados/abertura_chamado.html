@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abrir Chamado</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px; /* Menor espaçamento */
+            width: 400px; /* Largura ajustada */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 24px; /* Tamanho do título */
+            text-align: center; /* Centralizar título */
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-size: 16px; /* Tamanho da fonte */
+        }
+
+        input[type="text"], textarea {
+            width: calc(100% - 20px); /* Largura do campo com margem */
+            padding: 10px; /* Espaçamento interno */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 15px; /* Espaçamento entre campos */
+        }
+
+        textarea {
+            height: 100px; /* Altura maior para descrição */
+            resize: none; /* Desabilitar redimensionamento do textarea */
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%; /* Botão ocupa 100% do container */
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Efeito de hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Abrir Chamado</h1>
+        <form id="formChamado">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" required>
+
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" required oninput="formatarTelefone(this)">
+
+            <label for="whatsapp">WhatsApp:</label>
+            <input type="text" id="whatsapp" oninput="formatarTelefone(this)">
+
+            <label for="local">Local:</label>
+            <input type="text" id="local" required>
+
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" required></textarea>
+
+            <button type="submit">Abrir Chamado</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function formatarTelefone(input) {
+            let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+            
+            if (value.length > 11) {
+                value = value.slice(0, 11); // Limita a 11 dígitos
+            }
+            
+            if (value.length > 6) {
+                input.value = value.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3'); // Formato (XX) XXXXX-XXXX
+            } else if (value.length > 2) {
+                input.value = value.replace(/^(\d{2})(\d{4,5})$/, '($1) $2-'); // Formato (XX) XXXX- ou (XX) XXXXX-
+            } else if (value.length > 0) {
+                input.value = value.replace(/^(\d{2})/, '($1'); // Formato (XX
+            } else {
+                input.value = ''; // Se não houver valor, limpa o campo
+            }
+        }
+    </script>
+</body>
+</html>

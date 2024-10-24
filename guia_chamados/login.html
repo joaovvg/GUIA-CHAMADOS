@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login de Administrador</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px; /* Aumentar o espaçamento */
+            width: 400px; /* Largura ajustada */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 28px; /* Tamanho do título */
+            text-align: center; /* Centralizar título */
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-size: 16px; /* Tamanho da fonte */
+        }
+
+        input[type="text"], input[type="password"] {
+            width: calc(100% - 20px); /* Largura do campo com margem */
+            padding: 10px; /* Espaçamento interno */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 15px; /* Espaçamento entre campos */
+        }
+
+        button {
+            background-color: #007BFF; /* Cor do botão */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%; /* Botão ocupa 100% do container */
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Efeito de hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login de Administrador</h1>
+        <form id="loginForm">
+            <label for="login">Login:</label>
+            <input type="text" id="login" required>
+
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" required>
+
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

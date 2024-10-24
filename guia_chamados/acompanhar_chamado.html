@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acompanhar Chamado</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Acompanhar Chamado</h1>
+        <form id="pesquisarChamado">
+            <label for="codigo">Código do Chamado:</label>
+            <input type="text" id="codigo" required>
+            <button type="submit">Pesquisar</button>
+        </form>
+        <div id="detalhesChamado"></div>
+    </div>
+    <script>
+        // Carrega os chamados do localStorage ou usa um array vazio se não houver
+        let chamados = JSON.parse(localStorage.getItem("chamados")) || [];
+
+        // Função para buscar o chamado pelo código e exibir seus detalhes
+        document.getElementById("pesquisarChamado").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evita o reload da página ao submeter o formulário
+            const codigo = document.getElementById("codigo").value;
+            const chamado = chamados.find(ch => ch.codigo === codigo);
+
+            const detalhesChamadoDiv = document.getElementById("detalhesChamado");
+            detalhesChamadoDiv.innerHTML = ""; // Limpa os detalhes anteriores
+
+            if (chamado) {
+                // Exibe os detalhes do chamado, incluindo o status da resposta
+                detalhesChamadoDiv.innerHTML = `
+                    <h3>Detalhes do Chamado</h3>
+                    <p><strong>Código:</strong> ${chamado.codigo}</p>
+                    <p><strong>Nome:</strong> ${chamado.nome}</p>
+                    <p><strong>Telefone:</strong> ${chamado.telefone}</p>
+                    <p><strong>WhatsApp:</strong> ${chamado.whatsapp}</p>
+                    <p><strong>Local:</strong> ${chamado.local}</p>
+                    <p><strong>Descrição:</strong> ${chamado.descricao}</p>
+                    <p><strong>Resposta:</strong> ${chamado.resposta ? chamado.resposta : 'Aguardando'}</p>
+                `;
+            } else {
+                // Mensagem de erro se o chamado não for encontrado
+                detalhesChamadoDiv.innerHTML = `<p>Chamado não encontrado.</p>`;
+            }
+        });
+    </script>
+</body>
+</html>

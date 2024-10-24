@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acompanhamento de Chamado</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Acompanhamento de Chamado</h1>
+        <label for="codigoChamado">Código do Chamado:</label>
+        <input type="text" id="codigoChamado" required>
+        <div class="button-group">
+            <button type="button" onclick="window.location.href='index.html'">Voltar</button>
+            <button onclick="carregarChamadoPorCodigo()">Pesquisar</button>
+        </div>
+        <div id="chamadoInfo"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

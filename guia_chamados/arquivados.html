@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamados Arquivados</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilo para o layout geral */
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            padding: 20px;
+            max-width: 1200px;
+        }
+
+        /* Estilo para cada chamado arquivado */
+        .chamado-arquivado {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Estilo para o conteúdo do chamado arquivado */
+        .chamado-arquivado h3, 
+        .chamado-arquivado p {
+            margin: 5px 0;
+            flex-grow: 1;
+        }
+
+        /* Alinha os botões na horizontal */
+        .chamado-arquivado .button-group {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .chamado-arquivado button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chamados Arquivados</h1>
+        <div id="listaArquivados"></div>
+        <div class="button-group">
+            <button onclick="window.location.href='index.html'">Sair</button>
+            <button onclick="window.location.href='gerencia.html'">Gerenciar Chamados</button>
+        </div>
+    </div>
+    <script>
+        // Carrega os chamados arquivados do localStorage ou inicia com um array vazio
+        let chamadosArquivados = JSON.parse(localStorage.getItem("chamados")) || [];
+
+        // Função para carregar chamados arquivados
+        function carregarChamadosArquivados() {
+            const listaArquivados = document.getElementById("listaArquivados");
+            listaArquivados.innerHTML = ""; // Limpa a lista anterior
+
+            chamadosArquivados.forEach((chamado) => {
+                if (chamado.status === "Arquivado") { // Verifica se o chamado está arquivado
+                    const divChamado = document.createElement("div");
+                    divChamado.className = "chamado-arquivado";
+                    divChamado.innerHTML = `
+                        <div class="detalhes-chamado">
+                            <h3>Código: ${chamado.codigo}</h3>
+                            <p><strong>Nome:</strong> ${chamado.nome}</p>
+                            <p><strong>Telefone:</strong> ${chamado.telefone}</p>
+                            <p><strong>WhatsApp:</strong> ${chamado.whatsapp}</p>
+                            <p><strong>Local:</strong> ${chamado.local}</p>
+                            <p><strong>Descrição:</strong> ${chamado.descricao}</p>
+                        </div>
+                        <div class="button-group">
+                            <button onclick="desarquivarChamado('${chamado.codigo}')">Desarquivar Chamado</button>
+                        </div>
+                    `;
+
+                    listaArquivados.appendChild(divChamado);
+                }
+            });
+        }
+
+               // Função para desarquivar um chamado
+               function desarquivarChamado(codigo) {
+            const index = chamadosArquivados.findIndex(chamado => chamado.codigo === codigo);
+            if (index !== -1) {
+                // Remove o status de arquivado
+                chamadosArquivados[index].status = "Em Aberto"; // Ou outro status desejado
+
+                // Atualiza o localStorage
+                localStorage.setItem("chamados", JSON.stringify(chamadosArquivados));
+                alert("Chamado desarquivado com sucesso!");
+
+                // Atualiza a lista de chamados arquivados
+                carregarChamadosArquivados();
+            }
+        }
+
+        // Chama a função para carregar os chamados arquivados na inicialização da página
+        carregarChamadosArquivados();
+    </script>
+</body>
+</html>

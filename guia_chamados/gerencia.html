@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerência de Chamados</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilo para o layout geral */
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            padding: 20px;
+            max-width: 1200px;
+        }
+
+        /* Estilo para cada chamado */
+        .chamado {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Estilo para o conteúdo do chamado */
+        .chamado h3, 
+        .chamado p {
+            margin: 5px 0;
+            flex-grow: 1;
+        }
+
+        /* Alinha os botões na horizontal */
+        .chamado .button-group {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .chamado button {
+            margin-left: 10px;
+        }
+
+        /* Estilo para o separador entre chamados */
+        .separador {
+            height: 2px;
+            background-color: #ccc;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerência de Chamados</h1>
+        <div id="listaChamados"></div>
+        <div class="button-group">
+            <button onclick="window.location.href='index.html'">Sair</button>
+            <button onclick="window.location.href='arquivados.html'">Chamados Arquivados</button>
+        </div>
+    </div>
+    <script>
+        // Carrega os chamados do localStorage ou inicia com um array vazio
+        let chamados = JSON.parse(localStorage.getItem("chamados")) || [];
+
+        // Função para gerenciar os chamados
+        function carregarChamadosGerencia() {
+            const listaChamados = document.getElementById("listaChamados");
+            listaChamados.innerHTML = ""; // Limpa a lista anterior
+
+            chamados.forEach((chamado) => {
+                if (chamado.status !== "Arquivado") { // Não mostra chamados arquivados
+                    const divChamado = document.createElement("div");
+                    divChamado.className = "chamado";
+                    divChamado.innerHTML = `
+                        <div class="detalhes-chamado">
+                            <h3>Código: ${chamado.codigo}</h3>
+                            <p><strong>Nome:</strong> ${chamado.nome}</p>
+                            <p><strong>Telefone:</strong> ${chamado.telefone}</p>
+                            <p><strong>WhatsApp:</strong> ${chamado.whatsapp}</p>
+                            <p><strong>Local:</strong> ${chamado.local}</p>
+                            <p><strong>Descrição:</strong> ${chamado.descricao}</p>
+                            <p><strong>Status:</strong> ${chamado.status}</p>
+                        </div>
+                        <div class="button-group">
+                            <button onclick="arquivarChamado('${chamado.codigo}')">Arquivar Chamado</button>
+                            <button onclick="responderChamado('${chamado.codigo}')">Responder Chamado</button>
+                            <button onclick="excluirChamado('${chamado.codigo}')">Excluir Chamado</button>
+                        </div>
+                    `;
+                    
+                    const separador = document.createElement("div");
+                    separador.className = "separador";
+                    
+                    listaChamados.appendChild(divChamado);
+                    listaChamados.appendChild(separador);
+                }
+            });
+        }
+
+        // Função para arquivar um chamado e redirecionar para a página de arquivados
+        function arquivarChamado(codigo) {
+            const index = chamados.findIndex(chamado => chamado.codigo === codigo);
+            if (index !== -1) {
+                // Altera o status do chamado para Arquivado
+                chamados[index].status = "Arquivado";
+
+                // Atualiza o localStorage
+                localStorage.setItem("chamados", JSON.stringify(chamados));
+                
+                alert("Chamado arquivado com sucesso!");
+                carregarChamadosGerencia(); // Atualiza a lista de chamados
+            }
+        }
+
+        // Função para excluir um chamado
+        function excluirChamado(codigo) {
+            const index = chamados.findIndex(chamado => chamado.codigo === codigo);
+            if (index !== -1) {
+                chamados.splice(index, 1);
+                localStorage.setItem("chamados", JSON.stringify(chamados));
+                alert("Chamado excluído com sucesso!");
+                carregarChamadosGerencia(); // Atualiza a lista de chamados
+            }
+        }
+
+        // Função para responder um chamado
+        function responderChamado(codigo) {
+            const resposta = prompt("Digite sua resposta:");
+            if (resposta) {
+                const chamado = chamados.find(ch => ch.codigo === codigo);
+                if (chamado) {
+                    chamado.resposta = resposta; // Adiciona a resposta ao chamado
+                    localStorage.setItem("chamados", JSON.stringify(chamados));
+                    alert(`Resposta para o chamado ${codigo} registrada com sucesso.`);
+                    carregarChamadosGerencia(); // Atualiza a lista de chamados
+                }
+            }
+        }
+
+        // Chama a função para carregar os chamados na inicialização da página
+        carregarChamadosGerencia();
+    </script>
+</body>
+</html>
